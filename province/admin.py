@@ -3,7 +3,7 @@ from .models import ProvinceModel
 # Register your models here.
 
 
-class ProvinceAdminConfig():
+class ProvinceAdminConfig(admin.ModelAdmin):
     model = ProvinceModel
     list_display = ('id', 'name')
 
