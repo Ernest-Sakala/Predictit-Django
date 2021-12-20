@@ -28,7 +28,9 @@ SECRET_KEY = 'django-insecure-(s9#)j%iw=ljr-x6k5ejtu=vb^&g$cyi44!@ejh&p*e(dc=d#0
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'predictit-django-app.herokuapp.com'
+]
 
 
 # Application definition
@@ -173,7 +175,8 @@ REST_FRAMEWORK = {
 AUTH_USER_MODEL = 'user.CustomUser'
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:4200"
+    "http://localhost:4200",
+    "https://predictit-django-app.herokuapp.com"
 ]
 
 
