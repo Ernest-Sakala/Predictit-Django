@@ -1,0 +1,25 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+django = "*"
+djangorestframework = "*"
+numpy = "*"
+keras = "==2.2.4"
+keras-applications = "==1.0.6"
+keras-preprocessing = "==1.0.5"
+pillow = "*"
+sklearn = "==0.0"
+scikit-learn = "*"
+opencv-contrib-python = "*"
+opencv-python = "*"
+django-cors-headers = "*"
+djangorestframework-simplejwt = "*"
+
+[dev-packages]
+autopep8 = "*"
+
+[requires]
+python_version = "3.9"
