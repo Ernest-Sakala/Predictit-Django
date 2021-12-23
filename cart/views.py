@@ -20,13 +20,14 @@ class CartView(APIView):
     def get(self, request, pk, format=None):
 
         cart = CartModel.objects.filter(
-            request.user.id)
+            user=request.user.id).select_related('drug')
         serializer = CartSerializer(cart, many=True)
 
         return Response(serializer.data)
 
     def put(self, request, pk, format=None):
-        cart = self.get_object(pk)
+
+        cart = CartModel.objects.get(id=pk)
         serializer = CartSerializer(cart, data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -34,6 +35,6 @@ class CartView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, pk, format=None):
-        cart = self.get_object(pk)
+        cart = CartModel.objects.get(id=pk)
         cart.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        return Response({"message": "Item deleted Successfully"})

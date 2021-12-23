@@ -6,7 +6,7 @@ from .models import DrugModel
 
 class DrugAdminConfig(admin.ModelAdmin):
     model = DrugModel
-    list_display = ('id', 'name', 'disease', 'user')
+    list_display = ('id', 'name', 'disease', 'user', 'description')
 
 
 admin.site.register(DrugModel, DrugAdminConfig)

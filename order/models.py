@@ -7,14 +7,14 @@ from address.models import AddressModel
 class OrderModel(models.Model):
     pharmacy = models.IntegerField()
     paymentStatus = models.BooleanField()
-    orderedDate = models.DateTimeField()
-    packedDate = models.DateTimeField()
-    transportedDate = models.DateTimeField()
-    deliveredDate = models.DateTimeField()
-    cancelledDate = models.DateTimeField()
-    deliveryPrice = models.DateTimeField()
-    orderStatus = models.CharField()
-    totalAmount = models.CharField()
+    orderedDate = models.DateTimeField(auto_now_add=True)
+    packedDate = models.DateTimeField(auto_now_add=True)
+    transportedDate = models.DateTimeField(auto_now_add=True)
+    deliveredDate = models.DateTimeField(auto_now_add=True)
+    cancelledDate = models.DateTimeField(auto_now_add=True)
+    deliveryPrice = models.CharField(max_length=255)
+    orderStatus = models.CharField(max_length=255)
+    totalAmount = models.CharField(max_length=255)
     totalProducts = models.IntegerField()
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL,

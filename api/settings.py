@@ -29,7 +29,7 @@ SECRET_KEY = 'django-insecure-(s9#)j%iw=ljr-x6k5ejtu=vb^&g$cyi44!@ejh&p*e(dc=d#0
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'predictit-django-app.herokuapp.com'
+    '*'
 ]
 
 
@@ -96,24 +96,24 @@ WSGI_APPLICATION = 'api.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'd4e3kfged0p0ds',
-        'USER': 'prgtvsobziviza',
-        'PASSWORD': '34a4337ee4fed80f042fbb7f3bc84baf54685f2ae0b0757d22aba448c46903da',
-        'HOST': 'ec2-35-174-117-255.compute-1.amazonaws.com',
-        'PORT': '5432',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'predictit',
+#         'USER': 'root',
+#         'PASSWORD': 'root',
+#         'HOST': 'localhost',
+#         'PORT': '3308',
+#     }
+# }
 
 
 # Password validation
@@ -172,16 +172,23 @@ REST_FRAMEWORK = {
     )
 }
 
+
+SERIALIZATION_MODULES = {
+    'json': 'wadofstuff.django.serializers.json'
+}
+
+
 AUTH_USER_MODEL = 'user.CustomUser'
+
+CORS_ALLOW_ALL_ORIGINS = True
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:4200",
-    "https://predictit-django-app.herokuapp.com"
 ]
 
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=120),
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=3600),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=10),
     'ROTATE_REFRESH_TOKENS': True,
     'BLACKLIST_AFTER_ROTATION': True,

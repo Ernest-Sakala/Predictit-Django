@@ -21,6 +21,7 @@ gunicorn = "*"
 whitenoise = "*"
 psycopg2 = "*"
 django-heroku = "*"
+mysqlclient = "*"
 
 [dev-packages]
 autopep8 = "*"

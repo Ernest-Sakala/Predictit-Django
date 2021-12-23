@@ -3,13 +3,12 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
 from order.models import OrderModel
-
 from order.serializers import OrderSerializer
 
 # Create your views here.
 
 
-class AddressView(APIView):
+class OrderView(APIView):
 
     def post(self, request):
         serializer = OrderSerializer(data=request.data)

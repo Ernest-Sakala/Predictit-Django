@@ -20,8 +20,7 @@ class AddressView(APIView):
 
     def get(self, request, pk, format=None):
 
-        address = AddressModel.objects.filter(
-            request.user.id)
+        address = AddressModel.objects.filter(id=request.user.id)
         serializer = AddressSerializer(address, many=True)
 
         return Response(serializer.data)

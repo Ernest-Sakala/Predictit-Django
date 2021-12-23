@@ -7,14 +7,14 @@ from town.models import TownModel
 
 
 class AddressModel(models.Model):
-    fullName = models.CharField()
-    address = models.CharField()
-    mobileNumber = models.CharField()
-    alternateNumber = models.CharField()
-    selected = models.BooleanField()
-    compound = models.CharField()
-    buldingNumber = models.CharField()
-    landMark = models.CharField()
+    fullName = models.CharField(max_length=255)
+    address = models.CharField(max_length=255)
+    mobileNumber = models.CharField(max_length=255)
+    alternateNumber = models.CharField(max_length=255, blank=True)
+    selected = models.BooleanField(default=False)
+    compound = models.CharField(max_length=255)
+    buldingNumber = models.CharField(max_length=255, blank=True)
+    landMark = models.CharField(max_length=255)
 
     town = models.ForeignKey(TownModel, on_delete=models.CASCADE)
     province = models.ForeignKey(ProvinceModel, on_delete=models.CASCADE)

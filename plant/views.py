@@ -12,10 +12,13 @@ import numpy as np
 import os
 from custom_code import image_converter
 from rest_framework.views import APIView
+from disease.models import DiseaseModel
 from rest_framework.response import Response
 from rest_framework import status
+from drug.serializers import DrugSerializer
 from rest_framework.parsers import MultiPartParser
 from .serializers import ImageSerializer
+from drug.models import DrugModel
 
 
 @api_view(['GET'])
@@ -177,8 +180,12 @@ class PredictView(APIView):
                 f"{BASE_DIR}/{serializer.data['image']}", model)
             result = preds
 
-           
+            disease = DiseaseModel.objects.get(name=result)
 
-            return Response(result, status=status.HTTP_200_OK)
+            drugs = DrugModel.objects.filter(disease=disease.id)
+
+            serializer = DrugSerializer(drugs, many=True)
+
+            return Response(serializer.data, status=status.HTTP_200_OK)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

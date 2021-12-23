@@ -22,7 +22,12 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/plant/', include("plant.urls")),
     path('api/user/', include("user.urls")),
-    path('api/drug/', include("drug.urls"))
+    path('api/drug/', include("drug.urls")),
+    path('api/cart/', include("cart.urls")),
+    path('api/address/', include("address.urls")),
+    path('api/order/', include("order.urls")),
+    path('api/order-drug/', include("order_drug.urls")),
+    path('api/pharmacy-detail/', include("pharmacy_detail.urls"))
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
