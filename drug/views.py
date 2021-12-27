@@ -7,6 +7,7 @@ from rest_framework.parsers import MultiPartParser
 from .models import DrugModel
 from rest_framework import generics
 from disease.models import DiseaseModel
+import json
 # Create your vie ws here.
 
 
@@ -23,13 +24,6 @@ class DrugView(APIView):
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def get(self, request, pk, format=None):
-
-        drugs = DrugModel.objects.filter(user_id=pk)
-        serializer = DrugSerializer(drugs, many=True)
-
-        return Response(serializer.data)
-
     def put(self, request, pk, format=None):
         drug = DrugModel.objects.get(id=pk)
         serializer = DrugSerializer(drug, data=request.data)
@@ -37,11 +31,6 @@ class DrugView(APIView):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    def delete(self, request, pk, format=None):
-        drug = self.get_object(pk)
-        drug.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
 
     def get(self, request, format=None):
 
@@ -65,3 +54,35 @@ class FilterView(APIView):
         serializer = DrugSerializer(drugs, many=True)
 
         return Response(serializer.data)
+
+
+class PharmacyDrugView(APIView):
+
+    def get(self, request, user_id, format=None):
+
+        drugs = DrugModel.objects.filter(user=user_id)
+
+        serializer = DrugSerializer(drugs, many=True)
+
+        return Response(serializer.data)
+
+
+class DrugByIdView(APIView):
+
+    def get(self, request, pk, format=None):
+
+        drug = DrugModel.objects.get(id=pk)
+        serializer = DrugSerializer(drug)
+
+        return Response(serializer.data)
+
+
+class DeleteDrugView(APIView):
+
+    def delete(self, request, drug_id, format=None):
+
+        drug = DrugModel.objects.get(id=drug_id)
+        drug.delete()
+        return Response({"message": "Drug Deleted Successfully"})
+
+

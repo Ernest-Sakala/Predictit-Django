@@ -2,18 +2,28 @@ from django.shortcuts import render
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .serializers import CartSerializer
+from .serializers import (CartSerializerCreate,  CartSerializerRead)
 from .models import CartModel
+from django.http import Http404
 # Create your views here.
 
 
 class CartView(APIView):
 
     def post(self, request):
-        serializer = CartSerializer(data=request.data)
+        serializer = CartSerializerCreate(data=request.data)
         if serializer.is_valid():
-            serializer.save(user=self.request.user)
-            return Response(serializer.data, status=status.HTTP_200_OK)
+            try:
+                cart = CartModel.objects.get(
+                    user=request.user.id, drug=serializer.validated_data.get('drug'))
+
+                if cart is not None:
+                    return Response({"message ": "Item already added to cart"})
+
+            except CartModel.DoesNotExist:
+                serializer.save(user=self.request.user)
+                return Response(serializer.data, status=status.HTTP_200_OK)
+
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -21,20 +31,29 @@ class CartView(APIView):
 
         cart = CartModel.objects.filter(
             user=request.user.id).select_related('drug')
-        serializer = CartSerializer(cart, many=True)
+
+        if not cart:
+            return Response({"message": "You have no drugs in cart"})
+
+        serializer = CartSerializerRead(cart, many=True)
 
         return Response(serializer.data)
 
     def put(self, request, pk, format=None):
 
         cart = CartModel.objects.get(id=pk)
-        serializer = CartSerializer(cart, data=request.data)
+        serializer = CartSerializerCreate(cart, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, pk, format=None):
-        cart = CartModel.objects.get(id=pk)
+
+        try:
+            cart = CartModel.objects.get(id=pk)
+        except CartModel.DoesNotExist:
+            return Response({"message": "Item does not exist"})
+
         cart.delete()
         return Response({"message": "Item deleted Successfully"})
