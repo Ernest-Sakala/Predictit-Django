@@ -27,7 +27,7 @@ class CartView(APIView):
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def get(self, request, pk, format=None):
+    def get(self, request, *args, **kwargs):
 
         cart = CartModel.objects.filter(
             user=request.user.id).select_related('drug')
@@ -39,19 +39,23 @@ class CartView(APIView):
 
         return Response(serializer.data)
 
-    def put(self, request, pk, format=None):
+    def put(self, request, *args, **kwargs):
 
-        cart = CartModel.objects.get(id=pk)
+        id = request.query_params["id"]
+
+        cart = CartModel.objects.get(id=id)
         serializer = CartSerializerCreate(cart, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def delete(self, request, pk, format=None):
+    def delete(self, request, *args, **kwargs):
+
+        id = request.query_params["id"]
 
         try:
-            cart = CartModel.objects.get(id=pk)
+            cart = CartModel.objects.get(id=id)
         except CartModel.DoesNotExist:
             return Response({"message": "Item does not exist"})
 

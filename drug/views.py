@@ -24,8 +24,11 @@ class DrugView(APIView):
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def put(self, request, pk, format=None):
-        drug = DrugModel.objects.get(id=pk)
+    def put(self, request,  *args, **kwargs):
+
+        id = request.query_params["id"]
+
+        drug = DrugModel.objects.get(id=id)
         serializer = DrugSerializer(drug, data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -45,9 +48,11 @@ class DrugView(APIView):
 
 class FilterView(APIView):
 
-    def get(self, request, disease, format=None):
+    def get(self, request, *args, **kwargs):
 
-        disease = DiseaseModel.objects.get(name=disease)
+        disease_name = request.query_params["disease"]
+
+        disease = DiseaseModel.objects.get(name=disease_name)
 
         drugs = DrugModel.objects.filter(disease=disease.id)
 
@@ -58,9 +63,11 @@ class FilterView(APIView):
 
 class PharmacyDrugView(APIView):
 
-    def get(self, request, user_id, format=None):
+    def get(self, request, *args, **kwargs):
 
-        drugs = DrugModel.objects.filter(user=user_id)
+        id = request.query_params["id"]
+
+        drugs = DrugModel.objects.filter(user=id)
 
         serializer = DrugSerializer(drugs, many=True)
 
@@ -69,9 +76,12 @@ class PharmacyDrugView(APIView):
 
 class DrugByIdView(APIView):
 
-    def get(self, request, pk, format=None):
+    def get(self, request, *args, **kwargs):
+
+        pk = request.query_params["id"]
 
         drug = DrugModel.objects.get(id=pk)
+
         serializer = DrugSerializer(drug)
 
         return Response(serializer.data)
@@ -79,10 +89,10 @@ class DrugByIdView(APIView):
 
 class DeleteDrugView(APIView):
 
-    def delete(self, request, drug_id, format=None):
+    def delete(self, request, *args, **kwargs):
 
-        drug = DrugModel.objects.get(id=drug_id)
+        id = request.query_params["id"]
+
+        drug = DrugModel.objects.get(id=id)
         drug.delete()
         return Response({"message": "Drug Deleted Successfully"})
-
-
