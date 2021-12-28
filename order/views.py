@@ -18,23 +18,38 @@ class OrderView(APIView):
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def get(self, request, pk, format=None):
+    def get(self, request, *args, **kwargs):
 
-        order = OrderModel.objects.filter(
-            request.user.id)
+        order = OrderModel.objects.filter(user=request.user.id)
         serializer = OrderSerializer(order, many=True)
 
         return Response(serializer.data)
 
-    def put(self, request, pk, format=None):
-        order = self.get_object(pk)
+    def put(self, request, *args, **kwargs):
+
+        id = request.query_params["id"]
+
+        order = OrderModel.objects.get(id=id)
         serializer = OrderSerializer(order, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def delete(self, request, pk, format=None):
-        order = self.get_object(pk)
+    def delete(self, request, *args, **kwargs):
+
+        id = request.query_params["id"]
+
+        order = OrderModel.objects.get(id=id)
         order.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class PharmacyOrderView(APIView):
+
+    def get(self, request, *args, **kwargs):
+
+        order = OrderModel.objects.filter(pharmacy=request.user.id)
+        serializer = OrderSerializer(order, many=True)
+
+        return Response(serializer.data)

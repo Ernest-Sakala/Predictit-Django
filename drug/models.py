@@ -18,6 +18,7 @@ class DrugModel(models.Model):
         DiseaseModel, on_delete=models.CASCADE)
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
                              on_delete=models.CASCADE)
+    price = models.CharField(max_length=255)
     description = models.TextField()
     name = models.CharField(max_length=255)
     image = models.ImageField(

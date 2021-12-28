@@ -18,22 +18,38 @@ class AddressView(APIView):
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def get(self, request, pk, format=None):
+    def get(self, request, *args, **kwargs):
 
-        address = AddressModel.objects.filter(id=request.user.id)
-        serializer = AddressSerializer(address, many=True)
+        addresses = AddressModel.objects.filter(user=request.user.id)
+
+        if not addresses:
+            return Response({"message": "You have no addresses"})
+
+        serializer = AddressSerializer(addresses, many=True)
 
         return Response(serializer.data)
 
-    def put(self, request, pk, format=None):
-        address = self.get_object(pk)
+    def put(self, request, *args, **kwargs):
+
+        id = request.query_params["id"]
+
+        address = AddressModel.objects.get(id=id)
+
         serializer = AddressSerializer(address, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def delete(self, request, pk, format=None):
-        address = self.get_object(pk)
+    def delete(self, request, *args, **kwargs):
+
+        id = request.query_params["id"]
+
+        try:
+            address = AddressModel.objects.get(id=id)
+
+        except AddressModel.DoesNotExist:
+            return Response({"message": "Item does not exist"})
+
         address.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        return Response({"message": "Item deleted Successfully"})

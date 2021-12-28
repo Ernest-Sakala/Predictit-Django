@@ -3,5 +3,6 @@ from .models import DieaseModel
 
 
 class DieaseSerializer(serializers.Serializer):
-    model = DieaseModel
-    fields = ('id', 'name')
+    class Meta:
+        model = DieaseModel
+        fields = ('id', 'name')
