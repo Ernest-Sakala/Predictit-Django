@@ -45,7 +45,7 @@ class DrugView(APIView):
 
         return Response(serializer.data)
 
-
+# 
 class FilterView(APIView):
 
     def get(self, request, *args, **kwargs):
@@ -80,8 +80,9 @@ class DrugByIdView(APIView):
 
         pk = request.query_params["id"]
 
-        drug = DrugModel.objects.get(id=pk).select_related('user')
+        drug = DrugModel.objects.get(id=pk)
 
+    
         serializer = DrugSerializerGet(drug)
 
         return Response(serializer.data)
