@@ -6,4 +6,4 @@ from .models import PharmacyDetailModel
 class PharmacyDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = PharmacyDetailModel
-        fields = ("__all__")
+        exclude = ['user']

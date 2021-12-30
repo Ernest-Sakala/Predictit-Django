@@ -2,7 +2,8 @@ from django.shortcuts import render
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .serializers import (CartSerializerCreate,  CartSerializerRead)
+from .serializers import (CartSerializerCreate,
+                          CartSerializerRead,  CartSerializerUpdate)
 from .models import CartModel
 from django.http import Http404
 # Create your views here.
@@ -11,6 +12,7 @@ from django.http import Http404
 class CartView(APIView):
 
     def post(self, request):
+
         serializer = CartSerializerCreate(data=request.data)
         if serializer.is_valid():
             try:
@@ -44,7 +46,7 @@ class CartView(APIView):
         id = request.query_params["id"]
 
         cart = CartModel.objects.get(id=id)
-        serializer = CartSerializerCreate(cart, data=request.data)
+        serializer = CartSerializerUpdate(cart, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)

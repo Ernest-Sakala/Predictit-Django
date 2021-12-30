@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .serializers import DrugSerializer
+from .serializers import (DrugSerializer, DrugSerializerGet)
 from rest_framework import status
 from rest_framework.parsers import MultiPartParser
 from .models import DrugModel
@@ -80,9 +80,9 @@ class DrugByIdView(APIView):
 
         pk = request.query_params["id"]
 
-        drug = DrugModel.objects.get(id=pk)
+        drug = DrugModel.objects.get(id=pk).select_related('user')
 
-        serializer = DrugSerializer(drug)
+        serializer = DrugSerializerGet(drug)
 
         return Response(serializer.data)
 

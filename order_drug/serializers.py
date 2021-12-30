@@ -6,4 +6,4 @@ from .models import OrderDrug
 class OrderDrugSerializer(serializers.ModelSerializer):
     class Meta:
         model = OrderDrug
-        fields = ("__all__")
+        exclude = ['user']

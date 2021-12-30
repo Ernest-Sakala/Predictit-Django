@@ -7,7 +7,7 @@ class CartSerializerCreate(serializers.ModelSerializer):
 
     class Meta:
         model = CartModel
-        fields = ("__all__")
+        fields = ('drug', 'quantity')
 
 
 class CartSerializerRead(serializers.ModelSerializer):
@@ -16,3 +16,10 @@ class CartSerializerRead(serializers.ModelSerializer):
         model = CartModel
         fields = ("__all__")
         depth = 1
+
+
+class CartSerializerUpdate(serializers.ModelSerializer):
+
+    class Meta:
+        model = CartModel
+        fields = ('id', 'drug', 'quantity')
