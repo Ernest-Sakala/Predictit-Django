@@ -5,7 +5,7 @@ from .models import DiseaseModel
 
 class DiseaseAdminConfig(admin.ModelAdmin):
     model = DiseaseModel
-    list_display = ('id', 'name')
+    list_display = ('id', 'name', 'description')
 
 
 admin.site.register(DiseaseModel, DiseaseAdminConfig)

@@ -7,6 +7,7 @@ from crop.models import CropModel
 class DiseaseModel(models.Model):
     crop = models.ForeignKey(CropModel, on_delete=models.CASCADE)
     name = models.CharField(max_length=255, unique=True)
+    description = models.TextField()
 
     def __str__(self):
         return self.name
