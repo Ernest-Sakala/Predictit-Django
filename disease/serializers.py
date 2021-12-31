@@ -1,8 +1,8 @@
 from rest_framework import serializers
-from .models import DieaseModel
+from .models import DiseaseModel
 
 
-class DieaseSerializer(serializers.Serializer):
+class DieaseSerializer(serializers.ModelSerializer):
     class Meta:
-        model = DieaseModel
-        fields = ('id', 'name')
+        model = DiseaseModel
+        fields = ("__all__")

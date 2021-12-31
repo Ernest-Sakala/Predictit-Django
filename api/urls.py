@@ -29,7 +29,8 @@ urlpatterns = [
     path('api/order-drug/', include("order_drug.urls")),
     path('api/pharmacy-detail/', include("pharmacy_detail.urls")),
     path('api/province/', include("province.urls")),
-    path('api/town/', include("town.urls"))
+    path('api/town/', include("town.urls")),
+    path('api/disease/', include("disease.urls"))
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

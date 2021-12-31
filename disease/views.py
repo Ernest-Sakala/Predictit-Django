@@ -2,7 +2,7 @@ from django.shortcuts import render
 from rest_framework.views import APIView
 from .models import DiseaseModel
 from rest_framework.response import Response
-from .serializers import DiseaseSerializer
+from .serializers import DieaseSerializer
 
 # Create your views here.
 
@@ -13,6 +13,6 @@ class DiseaseView(APIView):
 
         diseases = DiseaseModel.objects.all()
 
-        serializer = DiseaseSerializer(diseases, many=True)
+        serializer = DieaseSerializer(diseases, many=True)
 
         return Response(serializer.data)
