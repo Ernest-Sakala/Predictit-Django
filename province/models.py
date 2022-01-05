@@ -4,6 +4,9 @@ from django.db import models
 
 
 class ProvinceModel(models.Model):
+
+    class Meta:  # new
+        verbose_name_plural = "Provinces"
     name = models.CharField(max_length=255, unique=True)
 
     def __str__(self):

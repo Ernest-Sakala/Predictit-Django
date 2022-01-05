@@ -14,6 +14,10 @@ def upload_to(instance, filename):
 
 
 class DrugModel(models.Model):
+
+    class Meta:  # new
+        verbose_name_plural = "Drugs"
+
     disease = models.ForeignKey(
         DiseaseModel, on_delete=models.CASCADE)
     user = models.ForeignKey(settings.AUTH_USER_MODEL,

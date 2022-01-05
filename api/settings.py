@@ -27,6 +27,12 @@ SECRET_KEY = 'django-insecure-(s9#)j%iw=ljr-x6k5ejtu=vb^&g$cyi44!@ejh&p*e(dc=d#0
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+
+# admin.site.site_header = "Custom bookstore admin"
+# admin.site.site_title = "Custom bookstore admin site"
+# admin.site.index_title = "Custom Bookstore Admin"
+
+
 ALLOWED_HOSTS = [
     '*'
 ]

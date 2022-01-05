@@ -40,6 +40,9 @@ class CustomAccountManager(BaseUserManager):
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
 
+    class Meta:  # new
+        verbose_name_plural = "Users"
+
     email = models.EmailField(_('email address'), unique=True)
     user_name = models.CharField(max_length=150, unique=False)
     start_date = models.DateTimeField(default=timezone.now)

@@ -33,4 +33,9 @@ urlpatterns = [
     path('api/disease/', include("disease.urls"))
 ]
 
+admin.site.site_header = "PredictIt Admin"
+admin.site.site_title = "PredictIt Admin"
+admin.site.index_title = "PredictIt Admin"
+
+
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -30,8 +30,9 @@ class PharmacyDetailView(APIView):
 
     def get(self, request, *args, **kwargs):
 
-        detail = PharmacyDetailModel.objects.filter(user=request.user.id)
-        serializer = PharmacyDetailSerializer(detail, many=True)
+        detail = PharmacyDetailModel.objects.get(user=request.user.id)
+
+        serializer = PharmacyDetailSerializer(detail)
 
         return Response(serializer.data)
 
@@ -53,7 +54,7 @@ class PharmacyDetailView(APIView):
 
         detail = PharmacyDetailModel.objects.get(id=id)
         detail.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        return Response({"message": "Details deleted Successfully"})
 
 
 class PharmacyDetails(APIView):

@@ -7,6 +7,10 @@ from town.models import TownModel
 
 
 class AddressModel(models.Model):
+
+    class Meta:  # new
+        verbose_name_plural = "Addresses"
+
     fullName = models.CharField(max_length=255)
     address = models.CharField(max_length=255)
     mobileNumber = models.CharField(max_length=255)

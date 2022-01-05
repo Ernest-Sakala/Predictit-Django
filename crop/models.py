@@ -2,6 +2,10 @@ from django.db import models
 
 
 class CropModel(models.Model):
+
+    class Meta:  # new
+        verbose_name_plural = "Crops"
+
     name = models.CharField(max_length=150, unique=True)
 
     def __str__(self):
