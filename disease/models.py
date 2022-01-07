@@ -7,7 +7,7 @@ from crop.models import CropModel
 class DiseaseModel(models.Model):
 
     class Meta:  # new
-        verbose_name_plural = "Orders"
+        verbose_name_plural = "Diseases"
 
     crop = models.ForeignKey(CropModel, on_delete=models.CASCADE)
     name = models.CharField(max_length=255, unique=True)

@@ -5,5 +5,6 @@ urlpatterns = [
     path("add", OrderView.as_view()),
     path("orders", OrderView.as_view()),
     path("delete", OrderView.as_view()),
+    path("update", OrderView.as_view()),
     path("pharmacy-orders", PharmacyOrderView.as_view())
 ]

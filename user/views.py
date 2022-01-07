@@ -20,12 +20,21 @@ class CustomUserCreate(APIView):
             if user:
                 json = serializer.data
                 return Response(json, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return Response({"message", "An error occured"})
 
     def get(self, request, *args, **kwargs):
 
-        user = CustomUser.objects.filter(is_pharmacy=True)
-        serializer = CustomUserSerializer(user, many=True)
+        users = CustomUser.objects.filter(is_pharmacy=True)
+        serializer = CustomUserSerializer(users, many=True)
+
+        return Response(serializer.data)
+
+    def get(self, request, *args, **kwargs):
+
+        id = request.query_params["id"]
+
+        user = CustomUser.objects.get(id=id)
+        serializer = CustomUserSerializer(user)
 
         return Response(serializer.data)
 
